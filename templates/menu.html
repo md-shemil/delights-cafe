@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-Z2z5uvAT+VWBpXjvb+VRq7uUkPds/G62IlBazAYYgNyilx6Pmw09fI2Qp0mH0eKT" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Menu</title>
+</head>
+<body class="body">
+    <div class="container">
+        <h1 class="heading">Delights Cafe</h1>
+        <h2 class="heading">Menu</h2>
+
+        <!-- Admin button at the top right -->
+        <div style="position: absolute; top: 30px; right: 10px;">
+            <a href="{{ url_for('admin_portal') }}">Admin</a>
+        </div>
+        
+
+        <ul class="menu-list">
+            <!-- Your Jinja template code remains unchanged -->
+            {% for item in menu_items %}
+                <li>{{ item[1] }} - Rs.{{ item[3] }} 
+                    <form method="post" action="{{ url_for('add_to_cart', menu_id=item[0]) }}">
+                        <button type="submit" class="button">Add to Cart</button>
+                    </form>
+                    <form method="post" onsubmit="return confirm('Are you sure you want to remove this item?');" action="{{ url_for('remove_from_cart', menu_id=item[0]) }}">
+                        <button type="submit" class="button button-remove">Remove</button>
+                    </form>
+            {% endfor %}
+        </ul>
+
+        <div class="cart-link" style="text-align: center;">
+            <a href="{{ url_for('view_cart') }}" class="button">Go to Cart</a>
+        </div>
+    </div>
+</body>
+</html>
